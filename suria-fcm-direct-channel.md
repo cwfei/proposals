@@ -14,7 +14,7 @@ Suria iOS has various types of notification, as follows:
 
 Reward uses data-only notification so that the app can handle foreground notifications by presenting custom reward dialogs to the users. To achive this, `shouldEstablishDirectChannel` needs to be set to true in the Firebase iOS SDK which automatically establishes a socket-based, direct channel to the FCM server. 
 
-With the deprecation of the Direct Channel API, data-only messages will no longer work as intended without proper. 
+With the deprecation of the Direct Channel API, data-only messages will no longer work as intended without proper migration. 
 
 
 ## Proposed solution
