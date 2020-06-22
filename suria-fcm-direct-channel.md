@@ -1,4 +1,4 @@
-# Handling deprecation of the FCM Direct Channel API (Suria iOS)
+# Suria: Handling deprecation of the FCM Direct Channel API
 
 ## Introduction
 Firebase Messaging iOS Direct Channel has been used for sending data to apps when they are in the foreground and for upstream messages. The Firebase Messaging iOS SDK v7.0 (slated to be released in September 2020) will no longer support the iOS Direct Channel API. The app will break if the Firebase Messaging iOS SDK has been updated to v7.0 without migrating off the iOS Direct Channel API.
