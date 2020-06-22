@@ -40,6 +40,7 @@ Here's a sample of the current reward notification payload:
 
 Notice that APNs configurations were missing in the payload, which are required for data message deliveries.
 
+// TODO: More details
 
 ### Handle notifications on iOS
 Set the `UNUserNotificationCenter` delegate to receive display notifications from Apple and FIRMessaging's delegate property to receive data messages from FCM.
