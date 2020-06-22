@@ -18,4 +18,9 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 
 
 ## Proposed solution
+Discontinute the use of the iOS Direct Channel API and use FCM's APNs interface for downstream data message delivery.
+
+## Detailed design
+### Add Apple Push Notification service support
+The newer FCM REST APIs have added improved APNs support, which allows [APNs specify options](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig) to be embedded in the notification payload. 
 
