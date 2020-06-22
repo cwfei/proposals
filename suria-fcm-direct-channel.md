@@ -21,6 +21,51 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 Discontinute the use of the iOS Direct Channel API and use FCM's APNs interface for downstream data message delivery.
 
 ## Detailed design
-### Add Apple Push Notification service support
+### Discontinute the use of the iOS Direct Channel API
+1. Remove depracted `didReceiveRemoteMessage` method in FIRMessaging's delegate.
+2. Remove `shouldEstablishDirectChannel`.
+
+### Use FCM's APNs interface for downstream data message delivery
 The newer FCM REST APIs have added improved APNs support, which allows [APNs specify options](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig) to be embedded in the notification payload. 
 
+Here's a sample of the current reward notification payload:
+```
+{
+  data: {
+    ...body,
+    rewardId: 'a318d3d9-a358-49b5-a555-c8754b7c6ff2'
+  }
+}
+```
+
+After adding APNs specify options to the paylaod:
+```
+{
+  data: {
+    ...body,
+    rewardId: 'a318d3d9-a358-49b5-a555-c8754b7c6ff2'
+  }
+}
+```
+
+### Handle APNs message on iOS
+Set the `UNUserNotificationCenter` delegate to receive display notifications from Apple and FIRMessaging's delegate property to receive data messages from FCM.
+
+
+```
+//----------------------------------------
+// MARK:- User notification center delegate
+//----------------------------------------
+
+extension NotificationService: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        // Delivers a notification to an app running in the foreground.
+        // TODO: Handle reward notifcations.
+        completionHandler([.alert, .badge, .sound])
+    }
+}
+```
