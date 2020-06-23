@@ -18,29 +18,32 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 
 
 ## Proposed solution
-Discontinute the use of the iOS Direct Channel API and use FCM's APNs interface for downstream data message delivery.
+* Discontinute the use of the iOS Direct Channel API
+* Use FCM HTTP v1 API or continue to use legacy sender API by tweaking configuration
 
 ## Detailed design
 ### Discontinute the use of the iOS Direct Channel API
 1. Remove deprecated `didReceiveRemoteMessage` method in FIRMessaging's delegate.
 2. Remove usage of `shouldEstablishDirectChannel`.
 
-### Use FCM's APNs interface for downstream data message delivery
-The newer FCM REST APIs have added improved APNs support, which allows [APNs specify options](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig) to be embedded in the notification payload.
+### Use FCM HTTP v1 API
+> The FCM HTTP v1 API, which is the most up to date of the protocol options, with more secure authorization and flexible > > cross-platform messaging capabilities (the Firebase Admin SDK is based on this protocol and provides all of its inherent > advantages). - [Firebase](https://firebase.google.com/docs/cloud-messaging/server)
 
-Here's a sample of the current reward notification payload:
+[Suria-backend](https://github.com/snappymob/suria-backend) uses the Firebase Admin SDK, which is supposed to be based on FCM HTTP v1 API, still uses [legacy HTTP API](https://github.com/firebase/firebase-admin-node/blob/master/src/messaging/messaging.ts#L38). This causes an issue where notifications were not being delivered successfully after `shouldEstablishDirectChannel` usage has been removed. To continue to use Firebase Admin SDK which is baed on legacy HTTP API, add the [`content_available`](https://firebase.google.com/docs/cloud-messaging/http-server-ref) key to the notification's payload:
+< When a notification or message is sent and this is set to true, an inactive client app is awoken, and the message is sent < through APNs as a silent notification and not through the FCM connection server.
+
+Here's a sample of the payload with content available key:
+
 ```
 {
-  data: {
-    ...body,
-    rewardId: 'a318d3d9-a358-49b5-a555-c8754b7c6ff2'
-  }
+  "data": {
+    "type": "reward",
+    "rewardId": "a318d3d9-a358-49b5-a555-c8754b7c6ff2"
+  },
+  "content_available": true
 }
 ```
 
-Notice that APNs configurations were missing in the payload, which are required for data message deliveries.
-
-// TODO: More details
 
 ### Handle notifications on iOS
 Set the `UNUserNotificationCenter` delegate to receive display notifications from Apple and FIRMessaging's delegate property to receive data messages from FCM.
