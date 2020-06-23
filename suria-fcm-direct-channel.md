@@ -48,27 +48,22 @@ Here's a sample of the payload:
 ```
 
 ### FCM HTTP v1 API
-FCM HTTP v1 API 
+Update Firebase Admin SDK to a version where it uses FCM HTTP v1 API.
 
 
 ### Handle notifications on iOS
-Set the `UNUserNotificationCenter` delegate to receive display notifications from Apple and FIRMessaging's delegate property to receive data messages from FCM.
+The client handles remote notifications in one of the FIRMessaging's delegate methods, `messaging(_:didReceive:)`. With the deprecation of this method, remote notifications will be sent to `application(_:didReceiveRemoteNotification:)` instead.
+
 
 
 ```
-//----------------------------------------
-// MARK:- User notification center delegate
-//----------------------------------------
+func application(
+    _ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+) {
+    appCoordinator.didReceiveRemoteNotification(for: userInfo)
 
-extension NotificationService: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        // Delivers a notification to an app running in the foreground.
-        // TODO: Handle reward notifcations.
-        completionHandler([.alert, .badge, .sound])
-    }
+    completionHandler(UIBackgroundFetchResult.newData)
 }
 ```
