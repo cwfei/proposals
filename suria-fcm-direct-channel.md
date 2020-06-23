@@ -26,10 +26,10 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 1. Remove deprecated `messaging(_:didReceive:)` method in FIRMessaging's delegate.
 2. Remove usage of `shouldEstablishDirectChannel`.
 
-### Legacy FCM API
+### Legacy FCM HTTP API
 > The FCM HTTP v1 API, which is the most up to date of the protocol options, with more secure authorization and flexible > > cross-platform messaging capabilities (the Firebase Admin SDK is based on this protocol and provides all of its inherent > advantages). - [Firebase](https://firebase.google.com/docs/cloud-messaging/server)
 
-[Suria-backend](https://github.com/snappymob/suria-backend) uses the Firebase Admin SDK, which is supposed to be based on FCM HTTP v1 API, still uses [legacy HTTP API](https://github.com/firebase/firebase-admin-node/blob/master/src/messaging/messaging.ts#L38). As a result, notifications were not able to be delivered successfully.
+[Suria-backend](https://github.com/snappymob/suria-backend) uses the Firebase Admin SDK, which is supposed to be based on FCM HTTP v1 API, still uses [legacy FCM HTTP API](https://github.com/firebase/firebase-admin-node/blob/master/src/messaging/messaging.ts#L38). As a result, notifications were not able to be delivered successfully.
 
 To resolve this, simply add the [`content_available`](https://firebase.google.com/docs/cloud-messaging/http-server-ref) key to the notification's payload:
 
