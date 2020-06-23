@@ -29,8 +29,9 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 ### Use FCM HTTP v1 API
 > The FCM HTTP v1 API, which is the most up to date of the protocol options, with more secure authorization and flexible > > cross-platform messaging capabilities (the Firebase Admin SDK is based on this protocol and provides all of its inherent > advantages). - [Firebase](https://firebase.google.com/docs/cloud-messaging/server)
 
-[Suria-backend](https://github.com/snappymob/suria-backend) uses the Firebase Admin SDK, which is supposed to be based on FCM HTTP v1 API, still uses [legacy HTTP API](https://github.com/firebase/firebase-admin-node/blob/master/src/messaging/messaging.ts#L38). This causes an issue where notifications were not being delivered successfully after `shouldEstablishDirectChannel` usage has been removed. To continue to use Firebase Admin SDK which is baed on legacy HTTP API, add the [`content_available`](https://firebase.google.com/docs/cloud-messaging/http-server-ref) key to the notification's payload:
-< When a notification or message is sent and this is set to true, an inactive client app is awoken, and the message is sent < through APNs as a silent notification and not through the FCM connection server.
+[Suria-backend](https://github.com/snappymob/suria-backend) uses the Firebase Admin SDK, which is supposed to be based on FCM HTTP v1 API, still uses [legacy HTTP API](https://github.com/firebase/firebase-admin-node/blob/master/src/messaging/messaging.ts#L38). As a result, notifications were not able to be delivered successfully. To resolve this, simply add the [`content_available`](https://firebase.google.com/docs/cloud-messaging/http-server-ref) key to the notification's payload:
+
+> `content_available`: When a notification or message is sent and this is set to true, an inactive client app is awoken, and the message is sent > through APNs as a silent notification and not through the FCM connection server.
 
 Here's a sample of the payload with content available key:
 
