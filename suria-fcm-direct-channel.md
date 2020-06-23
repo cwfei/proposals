@@ -23,7 +23,7 @@ With the deprecation of the Direct Channel API, data-only messages will no longe
 
 ## Detailed design
 ### Discontinute the use of the iOS Direct Channel API
-1. Remove deprecated `didReceiveRemoteMessage` method in FIRMessaging's delegate.
+1. Remove deprecated `messaging(_:didReceive:)` method in FIRMessaging's delegate.
 2. Remove usage of `shouldEstablishDirectChannel`.
 
 ### Legacy FCM API
