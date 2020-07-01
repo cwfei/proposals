@@ -4,18 +4,17 @@
 * Platform: iOS
 
 ## Introduction
-Firebase Messaging iOS Direct Channel has been used for sending data to apps when they are in the foreground and for upstream messages. The Firebase Messaging iOS SDK v7.0 (slated to be released in September 2020) will no longer support the iOS Direct Channel API. The app will break if the Firebase Messaging iOS SDK has been updated to v7.0 without migrating off the iOS Direct Channel API.
+Firebase Messaging iOS Direct Channel has been used for upstream messages and sending data to apps when they are in the foreground. The Firebase Messaging iOS SDK v7.0 (slated to be released in September 2020) will no longer support the iOS Direct Channel API. The app will break if the Firebase Messaging iOS SDK is updated to v7.0 without migrating off the iOS Direct Channel API.
 
 ## Context
-Suria iOS has various types of notification, as follows:
+The various types of notifications on Suria iOS are as follows:
 * General (Notification Message)
 * Live (Notification Message)
 * Reward (Data-only Message)
 
-Reward uses data-only notification so that the app can handle foreground notifications by presenting custom reward dialogs to the users. To achive this, `shouldEstablishDirectChannel` needs to be set to true in the Firebase iOS SDK which automatically establishes a socket-based, direct channel to the FCM server. 
+Reward uses data-only notifications so that the app can handle foreground notifications by presenting custom reward dialogs to the users. To achieve this, `shouldEstablishDirectChannel` needs to be set to true in the Firebase iOS SDK which automatically establishes a socket-based, direct channel to the FCM server.
 
-With the deprecation of the Direct Channel API, data-only messages will no longer work as intended without proper migration. 
-
+With the deprecation of the Direct Channel API, data-only messages will no longer work as intended without proper migration.
 
 ## Proposed solution
 * Discontinute the use of the iOS Direct Channel API
@@ -48,8 +47,7 @@ Here's a sample of the payload:
 ```
 
 ### FCM HTTP v1 API
-Update Firebase Admin SDK to a version where it uses FCM HTTP v1 API.
-
+Update Firebase Admin SDK to a version that uses FCM HTTP v1 API.
 
 ### Handle notifications on iOS
 The client handles remote notifications in one of the FIRMessaging's delegate methods, `messaging(_:didReceive:)`. With the deprecation of this method, remote notifications will be sent to `application(_:didReceiveRemoteNotification:)` instead.
