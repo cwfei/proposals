@@ -17,11 +17,11 @@ Reward uses data-only notifications so that the app can handle foreground notifi
 With the deprecation of the Direct Channel API, data-only messages will no longer work as intended without proper migration.
 
 ## Proposed solution
-* Discontinute the use of the iOS Direct Channel API
+* Discontinue the use of the iOS Direct Channel API
 * Use FCM HTTP v1 API or continue to use legacy sender API by tweaking configuration
 
 ## Detailed design
-### Discontinute the use of the iOS Direct Channel API
+### Discontinue the use of the iOS Direct Channel API
 1. Remove deprecated `messaging(_:didReceive:)` method in FIRMessaging's delegate.
 2. Remove usage of `shouldEstablishDirectChannel`.
 
