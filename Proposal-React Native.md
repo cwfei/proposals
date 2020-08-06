@@ -58,15 +58,6 @@ The public APIs in the service are as  follows:
 
 The deliberate use of `string` type for watchlist makes accessing data between different platforms possible. That also means the React Native side has to convert the watchlist to JSON representation for data storing and vice versa.
 
-#### State
-The availability of the watchlist represents different types of states:
-- Null: User is not logged in to the app.
-- Empty: User is logged in to the app but has empty watchlist.
-- Non-Empty: User is logged in to the app with watched coins.
-
-An empty watchlist basically means an empty JSON, `{ }`. The widgets will then present appropriate placeholder based on the state of the data.  The sample usage section below describes how these states can be managed properly in React Native.
-
-
 #### Sample usages of the module:
 
 ```
@@ -92,16 +83,23 @@ class WidgetPreferences extends Component {
         NativeModules.WatchlistService.setWatchlist(json)
     }
 }
-
-class Settings extends Component {
-    logOut = () => {
-        // Set watchlist to null, which indicates that the user
-        // has no longer signed in.
-        NativeModules.WatchlistService.setWatchlist(null)
-    }
-}
 ```
 
 ### UserService
 This service manages current user session.
+
+#### Sample usage of the module:
+```
+class App extends Component {
+    // Observer pattern sample.
+    auth.onAuthStateChanged { user =>
+        if (user == null) {
+	    NativeModules.UserService.setIsUserLoggedIn(false)
+	} else {
+	    NativeModules.UserService.setIsUserLoggedIn(true)
+	}
+    }
+}
+}
+```
 
