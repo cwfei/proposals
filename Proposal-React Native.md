@@ -90,8 +90,11 @@ This service manages current user session.
 
 #### Sample usage of the module:
 ```
+import { NativeModules } from 'react-native';
+
 class App extends Component {
-    // Observer pattern sample.
+
+    // Sample observer pattern.
     auth.onAuthStateChanged { user =>
         if (user == null) {
 	    NativeModules.UserService.setIsUserLoggedIn(false)
