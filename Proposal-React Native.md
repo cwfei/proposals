@@ -44,7 +44,7 @@ class Settings extends Component {
     changeLanguage = (language) => {
         // Reassign the language value whenever user changes the 
         // language within the app.
-        NativeModules.AppPreferencesService.setCurrency(currency)
+        NativeModules.AppPreferencesService.setLanguage(currency)
     }
 }
 ```
