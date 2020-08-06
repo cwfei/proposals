@@ -5,14 +5,17 @@ The purpose of this document is to give an overview of what needs to be done on 
 
 ## Native Modules
 
-There will be two native modules that act as the middle man for data communication between React Native and the native code, as follows:
+There will be three native modules that act as the middle man for data communication between React Native and the native code, as follows:
 * `AppPreferencesService`
 * `WatchlistService`
+* `UserService`
 
 ### AppPreferencesService
 This service manages app related preferences such as preferred language, currency, theme and so on. Currency is crucial for API calls that require a `vs_currency` query parameter, this ensures that the currency shown in the widgets is consistent with the preferred currency in the app. Language will be used for localization purpose.
 
-The public methods of `AppPreferencesService` are `setCurrency(currency: String)` and `setLanguage(language: String)`. It's the responsibility of the React Native app to assign currency and language values using this module. 
+The public APIs in the service are as follows:
+- `setCurrency(currency: String)`
+- `setLanguage(language: String)`
 
 #### Sample usages of the module:
 
@@ -98,3 +101,7 @@ class Settings extends Component {
     }
 }
 ```
+
+### UserService
+This service manages current user session.
+
