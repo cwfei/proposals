@@ -10,9 +10,9 @@ There will be two native modules that act as the middle man for data communicati
 * `WatchlistService`
 
 ### AppPreferencesService
-This service manages app related preferences such as preferred language, currency, theme and so on. Currency is crucial for API calls that require a `vs_currency` query parameter, this ensures that the currency shown in the widgets is consistent with the preferred currency in the app.
+This service manages app related preferences such as preferred language, currency, theme and so on. Currency is crucial for API calls that require a `vs_currency` query parameter, this ensures that the currency shown in the widgets is consistent with the preferred currency in the app. Language will be used for localization purpose.
 
-There will only be one public method in this service, which is `setCurrency(currency: String)`. It's the responsible of the React Native app to assign the currency value using this module. 
+The public methods of `AppPreferencesService` are `setCurrency(currency: String)` and `setLanguage(language: String)`. It's the responsibility of the React Native app to assign currency and language values using this module. 
 
 #### Sample usages of the module:
 
@@ -22,10 +22,12 @@ import { NativeModules } from 'react-native';
 class App extends Component {
     componentDidMount() {
         const currency = // Get currency from AsyncStorage.
+        const language = // Get language from AsyncStorage.
         
-        // Assign the currency value whenver the app launches to keep
+        // Assign the currency and language values whenver the app launches to keep
         // the data up to date.
 		NativeModules.AppPreferencesService.setCurrency(currency)
+        NativeModules.AppPreferencesService.setLanguage(language)
 	}
 }
 
@@ -35,11 +37,17 @@ class Settings extends Component {
         // currency within the app.
         NativeModules.AppPreferencesService.setCurrency(currency)
     }
+    
+    changeLanguage = (language) => {
+        // Reassign the language value whenever user changes the 
+        // language within the app.
+        NativeModules.AppPreferencesService.setCurrency(currency)
+    }
 }
 ```
 
 ### WatchlistService
-This service manages watched coins, it's the responsible of the React Native app to manage the watchlist using this module.
+This service manages watched coins, it's the responsibility of the React Native app to manage the watchlist using this module.
 
 The public APIs in the service are as  follows:
 - `getWatchlist(): String<Optional>`
@@ -90,17 +98,3 @@ class Settings extends Component {
     }
 }
 ```
-
-
-
-
-
-
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYyNzI2ODc2Nyw3NDcxOTIxNjMsODQ5OD
-IxMDM4LDE3OTU5OTcxMTgsLTM4ODA3Mjk5NywtMTU1ODM4NDIx
-MCwtMTc4MTQ3MzgxMSwxMTYwMjA4NzU0LDM3MTczNzc1NiwxNj
-EwNzQ0NTk3LDExNjg5NjExOTAsMTYxMDc0NDU5NywxMTY4OTYx
-MTkwLDE2MTA3NDQ1OTcsMTYxMDc0NDU5N119
--->
