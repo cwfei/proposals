@@ -52,7 +52,7 @@ class Settings extends Component {
 ### WatchlistService
 This service manages watched coins, it's the responsibility of the React Native app to manage the watchlist using this module.
 
-The public APIs in the service are as  follows:
+The public APIs in the service are as follows:
 - `getWatchlist(): String<Optional>`
 - `setWatchlist(jsonReprensentation: String<Optional>)`
 
@@ -86,16 +86,16 @@ class WidgetPreferences extends Component {
 ```
 
 ### UserService
-This service manages current user session.
+This service manages current user logged in state, which is used by widgets to populate appropriate placeholders. The API in the service is `setIsUserLoggedIn(value: Boolean)`.
 
-#### Sample usage of the module:
+#### Sample usages of the module:
 ```
 import { NativeModules } from 'react-native';
 
 class App extends Component {
 
     // Sample observer pattern.
-    auth.onAuthStateChanged { user =>
+    user.onUserChanged { user =>
         if (user == null) {
 	    NativeModules.UserService.setIsUserLoggedIn(false)
 	} else {
