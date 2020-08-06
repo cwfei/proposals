@@ -96,7 +96,7 @@ class App extends Component {
 
     // Sample observer pattern.
     user.onUserChanged { user =>
-        NativeModules.UserService.setIsUserLoggedIn(user == null)
+        NativeModules.UserService.setIsUserLoggedIn(user != null)
     }
 }
 ```
