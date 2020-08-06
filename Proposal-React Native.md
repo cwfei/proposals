@@ -27,8 +27,8 @@ class App extends Component {
         // Assign the currency and language values whenver the app launches to keep
         // the data up to date.
 	NativeModules.AppPreferencesService.setCurrency(currency)
-        NativeModules.AppPreferencesService.setLanguage(language)
-	}
+	NativeModules.AppPreferencesService.setLanguage(language)
+    }
 }
 
 class Settings extends Component {
