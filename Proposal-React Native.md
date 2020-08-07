@@ -53,10 +53,8 @@ class Settings extends Component {
 This service manages watched coins, it's the responsibility of the React Native app to manage the watchlist using this module.
 
 The public APIs in the service are as follows:
-- `getWatchlist(): String<Optional>`
-- `setWatchlist(jsonReprensentation: String<Optional>)`
-
-The deliberate use of `string` type for watchlist makes accessing data between different platforms possible. That also means the React Native side has to convert the watchlist to JSON representation for data storing and vice versa.
+- `getCoinIds(): [String]`
+- `setCoinIds(coinIds: [String])`
 
 #### Sample usages of the module:
 
@@ -67,20 +65,17 @@ class WidgetPreferences extends Component {
     render() {
         // This might no be the best place, it's just for demonstration.
         // Read data from the module.
-        const json = NativeModules.WatchlistService.getWatchlist()
-        
-        // Parse JSON back to arrray.
-        const coins = JSON.parse(json)
-
-        // Render UI with parsed data.
+        const coinIds = NativeModules.WatchlistService.getCoinIds()
+ 
+        // Render UI.
         ...
     }
 
     setWatchlist = (coins: [Coin]) => {
         // Note: Watchlist management UI and logic lie in the React Native app.
-        // Convert array to JSON.
-        const json = JSON.stringify(coins)
-        NativeModules.WatchlistService.setWatchlist(json)
+        // Convert coins to array of coin IDs.
+        const coinIds = ...
+        NativeModules.WatchlistService.setCoinIds(coinIds) // ["bitcoin", "ethereum"]
     }
 }
 ```
