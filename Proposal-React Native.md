@@ -1,4 +1,4 @@
-# Native Modules Support on React Native
+# Native Features Support on React Native
 
 ## Introduction
 The purpose of this document is to give an overview of what needs to be done on React Native in order to support building widgets natively on iOS and Android.
