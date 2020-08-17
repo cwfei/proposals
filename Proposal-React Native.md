@@ -97,7 +97,7 @@ class App extends Component {
 ```
 
 ## Linking
-The widgets have deep links integrated where the system will redirect users to a specific location within the app when a widget is tapped. Below shows a list of URL schemes the React Native app has to handle:
+The widgets have deep links integrated where the system will redirect users to a specific location within the app when a widget is tapped. The list of supported URL schemes are as follows:
 
 * coingeckoapp://coin_details?id=
 * coingeckoapp://sign_in
