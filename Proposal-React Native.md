@@ -96,3 +96,21 @@ class App extends Component {
 }
 ```
 
+### Linking
+The widgets have deep links integrated where the system will redirect users to a specific location within the app when users tap or click on a widget. Below shows a list of URL Schemes that React Native app has to handle:
+
+* coingecko://coin_details?id=
+* coingecko://sign_in
+* coingecko://watchlist
+* coingecko://market 
+
+There are two [ways](https://reactnative.dev/docs/linking#handling-deep-links) to handle URLs that open your app.
+
+1. If the app is already open, the app is foregrounded and a Linking event is fired
+You can handle these events with Linking.addEventListener(url, callback).
+
+2. If the app is not already open, it is opened and the url is passed in as the initialURL
+You can handle these events with Linking.getInitialURL(url) -- it returns a Promise that resolves to the url, if there is one.
+
+
+
